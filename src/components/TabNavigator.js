@@ -5,24 +5,35 @@ import {
   TabRouter,
   TabActions,
 } from '@react-navigation/native';
-import { View, Text, StyleSheet } from 'react-native';
-import { colors } from 'styles';
-import { color } from 'react-native-reanimated';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { colors, fonts } from 'styles';
+import Dots from 'img/3dots.svg';
 
-const TabNavigator = ({ initialRouteName, children, screenOptions }) => {
+const TabNavigator = ({
+  initialRouteName,
+  children,
+  screenOptions,
+  showDots,
+}) => {
   const { state, navigation, descriptors } = useNavigationBuilder(TabRouter, {
     children,
     screenOptions,
     initialRouteName,
+    showDots,
   });
   return (
     <View style={styles.container}>
       <View style={styles.tabHeader}>
         {state.routes.map(route => (
-          <View key={route.key} style={styles.tabContainer}>
-            <Text>{route.name}</Text>
-          </View>
+          <TouchableOpacity key={route.key}>
+            <View style={styles.tabContainer}>
+              <Text style={styles.tabText}>{route.name}</Text>
+            </View>
+          </TouchableOpacity>
         ))}
+        <TouchableOpacity style={styles.dots}>
+          <Dots width="50%" height="50%" />
+        </TouchableOpacity>
       </View>
       <View style={styles.screenContent}>
         {descriptors[state.routes[state.index].key].render()}
@@ -49,15 +60,29 @@ const styles = StyleSheet.create({
     height: '100%',
     borderBottomWidth: 4,
     borderBottomColor: colors.alt2,
-    // flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  tabText: {
+    color: 'white',
+    fontFamily: 'Sen-Bold',
+    fontSize: 20,
+  },
   screenContent: {
     flex: 11,
     // flexShrink: 1,
+  },
+  dots: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '12%',
+    height: '100%',
+    position: 'absolute',
+    right: 0,
+    top: 0,
   },
 });

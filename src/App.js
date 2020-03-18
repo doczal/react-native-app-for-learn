@@ -10,8 +10,8 @@ const Tab = TabNavigator();
 const App = () => (
   <NavigationContainer>
     <Tab.Navigator>
-      <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Notes" component={Profile} />
+      <Tab.Screen name="Tasks" component={Home} />
     </Tab.Navigator>
   </NavigationContainer>
 );
