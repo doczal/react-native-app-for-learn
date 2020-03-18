@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-import Logo from '../img/dahead.svg';
+import Logo from 'img/dahead.svg';
 
 const Profile = () => {
   return (
