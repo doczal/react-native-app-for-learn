@@ -39,24 +39,26 @@ const TabNavigator = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.tabHeader}>
-        {state.routes.map(route => (
-          <TouchableHighlight onPress={handlePress} key={route.key}>
-            <View style={styles.tabContainer}>
-              <Text style={styles.tabText}>{route.name}</Text>
-              <Animated.View
-                style={{ ...styles.tabUnderline, opacity: anim }}
-              />
-            </View>
+      <View style={styles.tabHeaderContainer}>
+        <View style={styles.tabHeader}>
+          {state.routes.map(route => (
+            <TouchableHighlight onPress={handlePress} key={route.key}>
+              <View style={styles.tabContainer}>
+                <Text style={styles.tabText}>{route.name}</Text>
+                {/* <Animated.View
+                  style={{ ...styles.tabUnderline, opacity: anim }}
+                /> */}
+              </View>
+            </TouchableHighlight>
+          ))}
+          <TouchableHighlight style={styles.dots}>
+            <Dots width="50%" height="50%" />
           </TouchableHighlight>
-        ))}
-        <TouchableHighlight style={styles.dots}>
-          <Dots width="50%" height="50%" />
-        </TouchableHighlight>
+        </View>
       </View>
-      <View style={styles.screenContent}>
+      {/* <View style={styles.screenContent}>
         {descriptors[state.routes[state.index].key].render()}
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -67,16 +69,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexShrink: 0,
-    height: '100%',
+    minHeight: '100%',
+  },
+  tabHeaderContainer: {
+    paddingVertical: 30,
+    backgroundColor: colors.bg.main,
   },
   tabHeader: {
     flex: 1,
-    flexShrink: 0,
+    // flexShrink: 0,
+    // height: 40,
     // flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.bg.main,
+    backgroundColor: 'green', //colors.bg.main,
   },
   tabContainer: {
     height: '100%',
@@ -85,13 +92,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     // backgroundColor: 'lightblue',
   },
   tabText: {
     color: 'white',
     fontFamily: 'Sen-Bold',
     fontSize: 20,
+    // paddingVertical: 40,
   },
   tabUnderline: {
     position: 'absolute',
