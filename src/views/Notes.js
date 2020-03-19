@@ -2,26 +2,26 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableWithoutFeedback,
   StyleSheet,
+  Keyboard,
 } from 'react-native';
-import Logo from 'img/dahead.svg';
+import SearchBar from 'components/SearchBar';
 
-const Profile = () => {
+const Notes = () => {
   return (
-    <TouchableWithoutFeedback onPress={() => console.log('asdf')}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Logo width={40} height={40} />
-        <Text>Profilez</Text>
+        <SearchBar />
+        <Text>Notes!</Text>
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
-export default Profile;
+export default Notes;
 
-StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     backgroundColor: 'lightblue',
     padding: 20,

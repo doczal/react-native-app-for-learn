@@ -1,6 +1,7 @@
 export const colors = {
   bg: {
-    main: '#141414',
+    main: '#151719',
+    alt: '#202527',
   },
   main: 'tomato',
   alt: 'turquoise',
