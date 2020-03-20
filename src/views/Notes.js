@@ -5,15 +5,20 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Keyboard,
+  Button,
 } from 'react-native';
 import SearchBar from 'components/SearchBar';
 
-const Notes = () => {
+const Notes = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <SearchBar />
         <Text>Notes!</Text>
+        <Button
+          onPress={() => navigation.navigate('Profile')}
+          title="Go to 'Profile'"
+        />
       </View>
     </TouchableWithoutFeedback>
   );

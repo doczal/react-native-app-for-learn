@@ -92,6 +92,9 @@ const styles = StyleSheet.create({
     flex: 1,
     // flexShrink: 0,
     minHeight: '100%',
+    width: '100%',
+    overflow: 'hidden',
+    backgroundColor: 'aquamarine',
   },
   tabHeaderContainer: {
     flex: 0,
@@ -130,8 +133,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.main,
   },
   screenContent: {
-    flex: 11,
+    flex: 1,
+    width: '200%',
+    flexDirection: 'row',
     backgroundColor: colors.bg.main,
+    overflow: 'hidden',
     // flexShrink: 1,
   },
   dots: {
