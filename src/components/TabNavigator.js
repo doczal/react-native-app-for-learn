@@ -20,31 +20,52 @@ const TabNavigator = ({
   initialRouteName,
   children,
   screenOptions,
-  showDots,
+  // showDots,
 }) => {
   const [anim] = useState(new Animated.Value(0));
   useEffect(() => {
-    Animated.timing(anim, { toValue: 0.8, duration: 1000 }).start();
-  }, []);
+    Animated.timing(anim, { toValue: 1, duration: 1000 }).start();
+  }, [anim]);
   const { state, navigation, descriptors } = useNavigationBuilder(TabRouter, {
     children,
     screenOptions,
     initialRouteName,
-    showDots,
+    // showDots,
   });
 
-  const handlePress = () => {
-    console.log('hi word');
+  const handlePress = route => {
+    const event = navigation.emit({
+      type: 'tabPress',
+      target: route.key,
+      canPreventDefault: true,
+    });
+    if (!event.defaultPrevented) {
+      navigation.dispatch(TabActions.jumpTo(route.name));
+    }
   };
+  const tabTextColor = anim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['white', colors.main],
+  });
 
   return (
     <View style={styles.container}>
       <View style={styles.tabHeaderContainer}>
         <View style={styles.tabHeader}>
           {state.routes.map(route => (
-            <TouchableHighlight onPress={handlePress} key={route.key}>
+            <TouchableHighlight
+              onPress={() => handlePress(route)}
+              key={route.key}
+            >
               <View style={styles.tabContainer}>
-                <Text style={styles.tabText}>{route.name}</Text>
+                <Animated.Text
+                  style={{
+                    ...styles.tabText,
+                    color: tabTextColor,
+                  }}
+                >
+                  {route.name}
+                </Animated.Text>
                 {/* <Animated.View
                   style={{ ...styles.tabUnderline, opacity: anim }}
                 /> */}
@@ -56,9 +77,10 @@ const TabNavigator = ({
           </TouchableHighlight>
         </View>
       </View>
-      {/* <View style={styles.screenContent}>
-        {descriptors[state.routes[state.index].key].render()}
-      </View> */}
+      <View style={styles.screenContent}>
+        {state.routes.map(route => descriptors[route.key].render())}
+        {/* {descriptors[state.routes[state.index].key].render()} */}
+      </View>
     </View>
   );
 };
@@ -68,26 +90,23 @@ export default createNavigatorFactory(TabNavigator);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexShrink: 0,
+    // flexShrink: 0,
     minHeight: '100%',
   },
   tabHeaderContainer: {
-    paddingVertical: 30,
-    backgroundColor: colors.bg.main,
+    flex: 0,
+    flexDirection: 'row',
   },
   tabHeader: {
     flex: 1,
-    // flexShrink: 0,
-    // height: 40,
-    // flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'green', //colors.bg.main,
+    backgroundColor: colors.bg.main,
+    // paddingVertical: 15,
   },
   tabContainer: {
-    height: '100%',
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 20,
     marginHorizontal: 10,
     flexDirection: 'row',

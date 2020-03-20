@@ -1,30 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   TouchableWithoutFeedback,
   StyleSheet,
   Keyboard,
+  Button,
 } from 'react-native';
 import SearchBar from 'components/SearchBar';
 
-const Notes = () => {
+const Tasks = () => {
+  const [count, setCount] = useState(0);
+  useEffect(() => () => console.log('unmounting task!'));
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <SearchBar />
-        <Text>Notes!</Text>
+        <Text>You have {count} Tasks!</Text>
+        <Button onPress={() => setCount(count + 1)} title="Press Me" />
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
-export default Notes;
+export default Tasks;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'lightpink',
+    backgroundColor: 'lightblue',
     padding: 20,
   },
 });

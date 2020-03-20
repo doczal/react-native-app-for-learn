@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeIcon from './img/games.svg';
 import ProfileIcon from './img/dahead.svg';
 
-import Home from './views/Home';
-import Profile from './views/Profile';
+import Tasks from './views/Tasks';
+import Notes from './views/Notes';
 
 // const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -26,9 +26,8 @@ const App = () => (
         inactiveTintColor: 'gray',
       }}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name="Home2" component={Home} />
+      <Tab.Screen name="Tasks" component={Tasks} />
+      <Tab.Screen name="Notes" component={Notes} />
     </Tab.Navigator>
   </NavigationContainer>
 );
