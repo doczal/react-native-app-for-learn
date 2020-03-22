@@ -7,6 +7,7 @@ export const colors = {
   btn: 'orange',
   alt: 'turquoise',
   alt2: 'fuchsia',
+  line: '#303537',
 };
 
 export const fonts = {

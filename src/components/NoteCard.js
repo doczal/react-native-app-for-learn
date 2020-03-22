@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { colors } from '../styles';
 
-const NoteCard = () => {
+const NoteCard = ({ text }) => {
   return (
     <View style={styles.card}>
-      <Text>This is a note</Text>
+      <Text style={styles.text}>{text}</Text>
     </View>
   );
 };
@@ -13,8 +14,13 @@ export default NoteCard;
 
 const styles = StyleSheet.create({
   card: {
-    borderColor: 'white',
+    borderColor: colors.line,
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 6,
+    padding: 10,
+    marginBottom: 10,
+  },
+  text: {
+    color: 'white',
   },
 });
