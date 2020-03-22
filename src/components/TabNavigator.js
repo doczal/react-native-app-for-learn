@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { usePrevious } from 'shared/utils';
 import {
   useNavigationBuilder,
   createNavigatorFactory,
   TabRouter,
   TabActions,
 } from '@react-navigation/native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+
 import {
   View,
   Text,
@@ -14,7 +17,6 @@ import {
 } from 'react-native';
 import { colors, fonts } from 'styles';
 import Dots from 'img/3dots.svg';
-import Reanimated from 'react-native-reanimated';
 
 const TabNavigator = ({
   initialRouteName,
@@ -22,16 +24,35 @@ const TabNavigator = ({
   screenOptions,
   // showDots,
 }) => {
-  const [anim] = useState(new Animated.Value(0));
-  useEffect(() => {
-    Animated.timing(anim, { toValue: 1, duration: 1000 }).start();
-  }, [anim]);
   const { state, navigation, descriptors } = useNavigationBuilder(TabRouter, {
     children,
     screenOptions,
     initialRouteName,
     // showDots,
   });
+
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeOutAnim = fadeAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+  });
+  const transIn = fadeAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0%', '100%'],
+  });
+  const transOut = fadeAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', '0%'],
+  });
+
+  const selectedRouteKey = state.routes[state.index].key;
+  const prevNavIndex = usePrevious(state.index);
+
+  useEffect(() => {
+    console.log('animate!');
+    fadeAnim.setValue(0);
+    Animated.spring(fadeAnim, { toValue: 1, duration: 200 }).start();
+  }, [fadeAnim, selectedRouteKey]);
 
   const handlePress = route => {
     const event = navigation.emit({
@@ -43,10 +64,6 @@ const TabNavigator = ({
       navigation.dispatch(TabActions.jumpTo(route.name));
     }
   };
-  const tabTextColor = anim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['white', colors.main],
-  });
 
   return (
     <View style={styles.container}>
@@ -54,6 +71,7 @@ const TabNavigator = ({
         <View style={styles.tabHeader}>
           {state.routes.map(route => (
             <TouchableHighlight
+              underlayColor={null}
               onPress={() => handlePress(route)}
               key={route.key}
             >
@@ -61,7 +79,8 @@ const TabNavigator = ({
                 <Animated.Text
                   style={{
                     ...styles.tabText,
-                    color: tabTextColor,
+                    color:
+                      route.key === selectedRouteKey ? colors.main : 'white',
                   }}
                 >
                   {route.name}
@@ -77,8 +96,22 @@ const TabNavigator = ({
           </TouchableHighlight>
         </View>
       </View>
-      <View style={styles.screenContent}>
-        {state.routes.map(route => descriptors[route.key].render())}
+      <View style={styles.mainScreen}>
+        {state.routes.map((route, idx, prevNavIndex) => (
+          <Animated.View
+            key={route.key}
+            style={getScreenStyle(
+              route.key,
+              selectedRouteKey,
+              idx,
+              routesArr,
+              transIn,
+              transOut,
+            )}
+          >
+            {descriptors[route.key].render()}
+          </Animated.View>
+        ))}
         {/* {descriptors[state.routes[state.index].key].render()} */}
       </View>
     </View>
@@ -86,6 +119,26 @@ const TabNavigator = ({
 };
 
 export default createNavigatorFactory(TabNavigator);
+
+const getScreenStyle = (
+  currRouteKey,
+  selectedRouteKey,
+  currIndex,
+  prevIndex,
+) => {
+  if (currRouteKey === selectedRouteKey) {
+    if (currIndex > prevIndex) {
+      return {
+        ...styles.screenContent,
+      };
+    }
+  }
+  return {
+    ...styles.screenContent,
+    // opacity: fadeOut,
+    // top: fadeOut,
+  };
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -99,6 +152,7 @@ const styles = StyleSheet.create({
   tabHeaderContainer: {
     flex: 0,
     flexDirection: 'row',
+    zIndex: 5,
   },
   tabHeader: {
     flex: 1,
@@ -132,13 +186,21 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: colors.main,
   },
-  screenContent: {
+  mainScreen: {
     flex: 1,
-    width: '200%',
     flexDirection: 'row',
-    backgroundColor: colors.bg.main,
-    overflow: 'hidden',
+    backgroundColor: 'lightblue',
+    // overflow: 'hidden',
     // flexShrink: 1,
+  },
+  screenContent: {
+    width: '100%',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    opacity: 1,
   },
   dots: {
     flex: 1,

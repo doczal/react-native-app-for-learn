@@ -3,7 +3,7 @@ export const colors = {
     main: '#151719',
     alt: '#202527',
   },
-  main: 'tomato',
+  main: 'coral',
   alt: 'turquoise',
   alt2: 'fuchsia',
 };

@@ -11,8 +11,8 @@ const Tab = TabNavigator();
 const App = () => (
   <NavigationContainer>
     <Tab.Navigator>
-      <Tab.Screen name="Tasks" component={Tasks} />
       <Tab.Screen name="Notes" component={Notes} />
+      <Tab.Screen name="Tasks" component={Tasks} />
     </Tab.Navigator>
   </NavigationContainer>
 );
