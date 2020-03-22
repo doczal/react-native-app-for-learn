@@ -13,23 +13,11 @@ import SearchBar from 'components/SearchBar';
 import AddBtn from 'components/AddBtn';
 import NoteCard from 'components/NoteCard';
 import { colors } from '../styles';
-import { todos as initialState } from 'mockData/todos';
 
-const notesReducer = (state, action) => {
-  switch (action.type) {
-    case 'addNote':
-      return [...state, action.note];
-    default:
-      throw new Error();
-  }
-};
-
-const Notes = ({ navigation }) => {
+const Notes = ({ navigation, notes }) => {
   const [isEditing, setEditing] = useState(false);
   const [searchVal, setSearchVal] = useState('');
-  const [notes, dispatch] = useReducer(notesReducer, initialState);
 
-  console.log(notes);
   const handleSearch = e => {
     setSearchVal(e);
   };
@@ -56,7 +44,6 @@ const Notes = ({ navigation }) => {
           renderItem={({ item }) => <NoteCard text={item.text} />}
           keyExtractor={item => item.id.toString()}
         />
-
         <AddBtn
           onPress={() => navigation.navigate('Add Note')}
           hide={isEditing}

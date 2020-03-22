@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { colors } from 'styles';
 
-const AddNote = () => {
+const AddNote = ({ navigation, handleAddNote }) => {
+  const [noteText, setNoteText] = useState('');
+  const onPress = () => {
+    handleAddNote(noteText);
+    navigation.goBack();
+  };
   return (
     <View style={styles.container}>
       <TextInput
         autoFocus
         style={styles.textInput}
         multiline={true}
-        // numberOfLines={5}
+        onChangeText={e => setNoteText(e)}
       />
-      <Button title="add" color={colors.main} />
+      <Button onPress={onPress} title="add" color={colors.main} />
     </View>
   );
 };
