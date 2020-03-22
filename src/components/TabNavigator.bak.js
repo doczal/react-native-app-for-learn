@@ -65,8 +65,6 @@ const TabNavigator = ({
     }
   };
 
-  const handleGesture = Animated.event({});
-
   return (
     <View style={styles.container}>
       <View style={styles.tabHeaderContainer}>
@@ -98,16 +96,24 @@ const TabNavigator = ({
           </TouchableHighlight>
         </View>
       </View>
-      <PanGestureHandler onGestureEvent={() => console.log('gesture')}>
-        <Animated.View style={styles.mainScreen}>
-          {state.routes.map((route, idx, prevNavIndex) => (
-            <Animated.View key={route.key} style={styles.screenContent}>
-              {descriptors[route.key].render()}
-            </Animated.View>
-          ))}
-          {/* {descriptors[state.routes[state.index].key].render()} */}
-        </Animated.View>
-      </PanGestureHandler>
+      <View style={styles.mainScreen}>
+        {state.routes.map((route, idx, prevNavIndex) => (
+          <Animated.View
+            key={route.key}
+            style={getScreenStyle(
+              route.key,
+              selectedRouteKey,
+              idx,
+              routesArr,
+              transIn,
+              transOut,
+            )}
+          >
+            {descriptors[route.key].render()}
+          </Animated.View>
+        ))}
+        {/* {descriptors[state.routes[state.index].key].render()} */}
+      </View>
     </View>
   );
 };
@@ -183,7 +189,7 @@ const styles = StyleSheet.create({
   mainScreen: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'mediumspringgreen',
+    backgroundColor: 'lightblue',
     // overflow: 'hidden',
     // flexShrink: 1,
   },

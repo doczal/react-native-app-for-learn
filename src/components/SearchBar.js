@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { colors } from 'styles';
 
-const SearchBar = ({ val, placeholder = 'Search', handleSearch }) => {
+const SearchBar = ({
+  val,
+  placeholder = 'Search',
+  handleSearch,
+  onFocus,
+  onBlur,
+}) => {
   return (
     <View>
       <TextInput
@@ -11,6 +17,8 @@ const SearchBar = ({ val, placeholder = 'Search', handleSearch }) => {
         placeholder={placeholder}
         onChangeText={handleSearch}
         placeholderTextColor="white"
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </View>
   );

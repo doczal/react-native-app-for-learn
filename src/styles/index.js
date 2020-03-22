@@ -4,6 +4,7 @@ export const colors = {
     alt: '#202527',
   },
   main: 'coral',
+  btn: 'orange',
   alt: 'turquoise',
   alt2: 'fuchsia',
 };
