@@ -3,12 +3,12 @@ import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { colors } from '../styles';
 import AddIcon from 'img/plus.svg';
 
-const AddBtn = ({ hide = false }) => {
+const AddBtn = ({ hide = false, onPress }) => {
   if (hide) {
     return null;
   }
   return (
-    <TouchableHighlight style={styles.addBtn}>
+    <TouchableHighlight onPress={onPress} style={styles.addBtn}>
       <AddIcon width="75%" height="75%" />
     </TouchableHighlight>
   );

@@ -36,7 +36,10 @@ const Notes = ({ navigation }) => {
           onFocus={onFocus}
           onBlur={onBlur}
         />
-        <AddBtn hide={isEditing} />
+        <AddBtn
+          onPress={() => navigation.navigate('Add Note')}
+          hide={isEditing}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
