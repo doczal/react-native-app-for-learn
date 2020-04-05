@@ -41,7 +41,7 @@ const NewsList = () => {
               renderItem: ({ item }) => <VerticalNewsList data={item} />,
             },
             {
-              title: 'Recommended',
+              title: 'Recommended Articles',
               data: [news.slice(5, 10)],
               renderItem: ({ item }) => <HorizontalNewsList data={item} />,
             },
@@ -51,9 +51,11 @@ const NewsList = () => {
               renderItem: ({ item }) => <VerticalNewsList data={item} />,
             },
           ]}
-          renderSectionHeader={({ section: { title } }) => (
-            <SectionHeader title={title} />
-          )}
+          renderSectionHeader={({ section: { title } }) =>
+            title === 'Recommended Articles' ? (
+              <SectionHeader title={title} />
+            ) : null
+          }
           keyExtractor={(item, index) => index}
         />
       )}
