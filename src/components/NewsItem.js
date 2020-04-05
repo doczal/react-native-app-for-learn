@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, fonts } from 'styles';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import GamesIcon from 'img/games.svg';
 
 /**
  * Clickable news article
@@ -13,17 +15,25 @@ import { colors, fonts } from 'styles';
 const NewsItem = ({ title, desc, date, url, isFluid = true }) => {
   return (
     <View style={[styles.container, isFluid ? null : styles.containerFixed]}>
-      <View style={styles.articleHeader}>
-        <Text style={styles.headerText}>{date}</Text>
-      </View>
-      <View style={styles.articleThumb} />
-      <View style={styles.articleInfo}>
-        <Text style={styles.articleTitleText}>{title}</Text>
-        <Text style={styles.articleDescText}>{desc}</Text>
-      </View>
+      <Swipeable renderRightActions={RightActions} overshootRight={false}>
+        <View style={styles.articleHeader}>
+          <Text style={styles.headerText}>{date}</Text>
+        </View>
+        <View style={styles.articleThumb} />
+        <View style={styles.articleInfo}>
+          <Text style={styles.articleTitleText}>{title}</Text>
+          <Text style={styles.articleDescText}>{desc}</Text>
+        </View>
+      </Swipeable>
     </View>
   );
 };
+
+const RightActions = () => (
+  <View style={styles.rightActions}>
+    <GamesIcon width={32} height={32} />
+  </View>
+);
 
 export default NewsItem;
 
@@ -33,6 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 4,
     marginBottom: 8,
+    overflow: 'hidden',
   },
   containerFixed: {
     width: 260,
@@ -41,6 +52,7 @@ const styles = StyleSheet.create({
     padding: 12,
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    backgroundColor: colors.bg.article,
   },
   headerText: {
     color: 'white',
@@ -52,6 +64,7 @@ const styles = StyleSheet.create({
   },
   articleInfo: {
     padding: 16,
+    backgroundColor: colors.bg.article,
   },
   articleTitleText: {
     color: 'white',
@@ -63,5 +76,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'fonts.main',
     fontSize: 14,
+  },
+  rightActions: {
+    width: '20%',
+    backgroundColor: colors.main,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
