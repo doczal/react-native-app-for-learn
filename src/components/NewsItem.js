@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { colors, fonts } from 'styles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import GamesIcon from 'img/games.svg';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * Clickable news article
@@ -12,20 +13,30 @@ import GamesIcon from 'img/games.svg';
  * @param {string} props.url - Article thumbnail url
  * @param {boolean} props.isFluid - whether it has fixed size
  */
-const NewsItem = ({ title, desc, date, url, isFluid = true }) => {
+const NewsItem = (props) => {
+  const { title, desc, date, url, isFluid = true, isSwipeable = false } = props;
+  const navigation = useNavigation();
+
   return (
-    <View style={[styles.container, isFluid ? null : styles.containerFixed]}>
-      <Swipeable renderRightActions={RightActions} overshootRight={false}>
-        <View style={styles.articleHeader}>
-          <Text style={styles.headerText}>{date}</Text>
-        </View>
-        <View style={styles.articleThumb} />
-        <View style={styles.articleInfo}>
-          <Text style={styles.articleTitleText}>{title}</Text>
-          <Text style={styles.articleDescText}>{desc}</Text>
-        </View>
-      </Swipeable>
-    </View>
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate('ArticleView', { title, desc, url })}
+    >
+      <View style={[styles.container, isFluid ? null : styles.containerFixed]}>
+        <Swipeable
+          renderRightActions={isSwipeable ? RightActions : null}
+          overshootRight={false}
+        >
+          <View style={styles.articleHeader}>
+            <Text style={styles.headerText}>{date}</Text>
+          </View>
+          <View style={styles.articleThumb} />
+          <View style={styles.articleInfo}>
+            <Text style={styles.articleTitleText}>{title}</Text>
+            <Text style={styles.articleDescText}>{desc}</Text>
+          </View>
+        </Swipeable>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

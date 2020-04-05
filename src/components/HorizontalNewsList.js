@@ -18,6 +18,7 @@ const HorizontalNewsList = ({ data }) => {
             date={item.date}
             url={item.url}
             isFluid={false}
+            isSwipeable={false}
           />
         )}
       />

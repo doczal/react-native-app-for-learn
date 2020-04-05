@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import NewsFeed from 'views/NewsFeed';
+import ArticleView from 'views/ArticleView';
 import { colors, fonts } from 'styles';
 
 const Stack = createStackNavigator();
@@ -18,6 +19,11 @@ const NewsNav = () => {
         name="NewsFeed"
         options={{ title: 'News Feed' }}
         component={NewsFeed}
+      />
+      <Stack.Screen
+        name="ArticleView"
+        options={{ title: 'Article' }}
+        component={ArticleView}
       />
     </Stack.Navigator>
   );

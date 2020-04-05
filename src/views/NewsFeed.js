@@ -51,6 +51,7 @@ const NewsList = () => {
               renderItem: ({ item }) => <VerticalNewsList data={item} />,
             },
           ]}
+          stickySectionHeadersEnabled={true}
           renderSectionHeader={({ section: { title } }) =>
             title === 'Recommended Articles' ? (
               <SectionHeader title={title} />
@@ -74,8 +75,8 @@ const styles = StyleSheet.create({
     marginTop: 32,
   },
   sectionHeader: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    padding: 16,
+    backgroundColor: colors.bg.main,
   },
   sectionHeaderText: {
     color: 'white',
