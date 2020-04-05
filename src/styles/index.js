@@ -2,8 +2,10 @@ export const colors = {
   bg: {
     main: '#151719',
     alt: '#202527',
+    article: '#303537',
+    lite: '#dedede',
   },
-  main: 'coral',
+  main: '#FF7F50',
   btn: 'orange',
   alt: 'turquoise',
   alt2: 'fuchsia',

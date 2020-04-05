@@ -10,7 +10,10 @@ const Tab = createMaterialTopTabNavigator();
 
 const App = () => (
   <NavigationContainer>
-    <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
+    <Tab.Navigator
+      initialRouteName="News"
+      tabBar={(props) => <CustomTabBar {...props} />}
+    >
       <Tab.Screen name="Notes" component={NotesNav} />
       <Tab.Screen name="News" component={NewsNav} />
     </Tab.Navigator>

@@ -8,10 +8,10 @@ export const usePrevious = (value) => {
   return ref.current;
 };
 
-export const fakeFetch = (data) => {
+export const fakeFetch = (data, delay = 3000) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
-    }, 2000);
+    }, delay);
   });
 };

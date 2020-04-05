@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import NewsList from 'views/NewsList';
-import { colors } from 'styles';
+import NewsFeed from 'views/NewsFeed';
+import { colors, fonts } from 'styles';
 
 const Stack = createStackNavigator();
 
@@ -15,9 +15,9 @@ const NewsNav = () => {
       }}
     >
       <Stack.Screen
-        name="NewsList"
-        options={{ title: 'Newsfeed' }}
-        component={NewsList}
+        name="NewsFeed"
+        options={{ title: 'News Feed' }}
+        component={NewsFeed}
       />
     </Stack.Navigator>
   );
@@ -31,5 +31,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: colors.bg.main,
+    fontFamily: fonts.bold,
   },
 });
