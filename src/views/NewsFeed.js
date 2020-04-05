@@ -37,19 +37,19 @@ const NewsList = () => {
           sections={[
             {
               title: 'Articles',
-              data: [news.slice(0, 5)],
+              data: [news.slice(0, 3)],
               renderItem: ({ item }) => <VerticalNewsList data={item} />,
             },
-            {
-              title: 'Recommended Articles',
-              data: [news.slice(5, 10)],
-              renderItem: ({ item }) => <HorizontalNewsList data={item} />,
-            },
-            {
-              title: 'Articles Continued',
-              data: [news.slice(20, 30)],
-              renderItem: ({ item }) => <VerticalNewsList data={item} />,
-            },
+            // {
+            //   title: 'Recommended Articles',
+            //   data: [news.slice(5, 10)],
+            //   renderItem: ({ item }) => <HorizontalNewsList data={item} />,
+            // },
+            // {
+            //   title: 'Articles Continued',
+            //   data: [news.slice(20, 30)],
+            //   renderItem: ({ item }) => <VerticalNewsList data={item} />,
+            // },
           ]}
           stickySectionHeadersEnabled={true}
           renderSectionHeader={({ section: { title } }) =>

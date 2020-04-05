@@ -4,6 +4,7 @@ import { colors, fonts } from 'styles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import GamesIcon from 'img/games.svg';
 import { useNavigation } from '@react-navigation/native';
+import { WebView } from 'react-native-webview';
 
 /**
  * Clickable news article
@@ -14,29 +15,36 @@ import { useNavigation } from '@react-navigation/native';
  * @param {boolean} props.isFluid - whether it has fixed size
  */
 const NewsItem = (props) => {
-  const { title, desc, date, url, isFluid = true, isSwipeable = false } = props;
+  const { title, desc, date, url, isFluid = true, isSwipeable = true } = props;
   const navigation = useNavigation();
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => navigation.navigate('ArticleView', { title, desc, url })}
-    >
-      <View style={[styles.container, isFluid ? null : styles.containerFixed]}>
-        <Swipeable
-          renderRightActions={isSwipeable ? RightActions : null}
-          overshootRight={false}
+    <View style={[styles.container, isFluid ? null : styles.containerFixed]}>
+      <Swipeable
+        renderRightActions={isSwipeable ? RightActions : null}
+        overshootRight={false}
+      >
+        <View style={styles.articleHeader}>
+          <Text style={styles.headerText}>{date}</Text>
+        </View>
+        <WebView
+          style={{ aspectRatio: 16 / 9 }}
+          source={{
+            uri: 'https://www.youtube.com/embed/BkPpgMwPss0',
+          }}
+        />
+        <TouchableWithoutFeedback
+          onPress={() =>
+            navigation.navigate('ArticleView', { title, desc, url })
+          }
         >
-          <View style={styles.articleHeader}>
-            <Text style={styles.headerText}>{date}</Text>
-          </View>
-          <View style={styles.articleThumb} />
           <View style={styles.articleInfo}>
             <Text style={styles.articleTitleText}>{title}</Text>
             <Text style={styles.articleDescText}>{desc}</Text>
           </View>
-        </Swipeable>
-      </View>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </Swipeable>
+    </View>
   );
 };
 
