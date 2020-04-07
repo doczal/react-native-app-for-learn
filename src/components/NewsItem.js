@@ -5,6 +5,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import GamesIcon from 'img/games.svg';
 import { useNavigation } from '@react-navigation/native';
 import { WebView } from 'react-native-webview';
+import { useSelector } from 'react-redux';
 
 /**
  * Clickable news article
@@ -17,6 +18,8 @@ import { WebView } from 'react-native-webview';
 const NewsItem = (props) => {
   const { title, desc, date, url, isFluid = true, isSwipeable = true } = props;
   const navigation = useNavigation();
+  // const newsRedux = useSelector((state) => state.news);
+  console.log('news item re-render', title);
 
   return (
     <View style={[styles.container, isFluid ? null : styles.containerFixed]}>
@@ -27,12 +30,12 @@ const NewsItem = (props) => {
         <View style={styles.articleHeader}>
           <Text style={styles.headerText}>{date}</Text>
         </View>
-        <WebView
+        {/* <WebView
           style={{ aspectRatio: 16 / 9 }}
           source={{
             uri: 'https://www.youtube.com/embed/BkPpgMwPss0',
           }}
-        />
+        /> */}
         <TouchableWithoutFeedback
           onPress={() =>
             navigation.navigate('ArticleView', { title, desc, url })

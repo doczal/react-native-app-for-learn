@@ -5,32 +5,32 @@ import {
   View,
   SectionList,
   ActivityIndicator,
+  FlatList,
   Button,
 } from 'react-native';
 import { fakeFetch } from 'shared/utils';
 import { colors, fonts } from 'styles';
-import NewsItem from 'components/NewsItem';
 import VerticalNewsList from 'components/VerticalNewsList';
-import HorizontalNewsList from 'components/HorizontalNewsList';
+import NewsItem from 'components/NewsItem';
 import newsData from 'mockData/news.json';
+import { useDispatch, useSelector } from 'react-redux';
+import { setThing } from 'redux/actions';
 
 const mockData = [
-  [
-    {
-      id: 1,
-      title: 'Regrant',
-      description: 'Pseudobulbar affect',
-      date: '2019-05-30T21:39:39Z',
-      url: 'http://dummyimage.com/232x103.bmp/cc0000/ffffff',
-    },
-    {
-      id: 2,
-      title: 'Poop',
-      description: 'Pseudobulbar affect',
-      date: '2019-05-30T21:39:39Z',
-      url: 'http://dummyimage.com/232x103.bmp/cc0000/ffffff',
-    },
-  ],
+  {
+    id: 1,
+    title: 'Regrant',
+    description: 'Pseudobulbar affect',
+    date: '2019-05-30T21:39:39Z',
+    url: 'http://dummyimage.com/232x103.bmp/cc0000/ffffff',
+  },
+  {
+    id: 2,
+    title: 'Poop',
+    description: 'Pseudobulbar affect',
+    date: '2019-05-30T21:39:39Z',
+    url: 'http://dummyimage.com/232x103.bmp/cc0000/ffffff',
+  },
 ];
 
 const SectionHeader = ({ title }) => (
@@ -39,9 +39,21 @@ const SectionHeader = ({ title }) => (
   </View>
 );
 
+const renderNewsItem = ({ item }) => (
+  <NewsItem
+    key={item.id}
+    title={item.title}
+    desc={item.description}
+    date={item.date}
+    url={item.url}
+  />
+);
+
 const NewsList = () => {
-  const [news, setNews] = useState([]);
+  const [news, setNews] = useState(newsData.slice(0, 1));
   const [count, setCount] = useState(0);
+  const newsRedux = useSelector((state) => state.news);
+  const dispatch = useDispatch();
   // useEffect(() => {
   //   console.log(count);
   //   // fakeFetch(newsData).then((res) => {
@@ -53,23 +65,26 @@ const NewsList = () => {
   //   setNews(newsData.slice(0, 3));
   // }, [count]);
 
-  const handleClick = () => {
+  const handleClick = React.useCallback(() => {
     const newCount = count + 1;
-    setCount(newCount);
+    dispatch(setThing(['poop']));
+    // setCount(newCount);
+    // console.log(count);
     // setNews(newsData.slice(0, newCount));
-  };
+  }, [count]);
 
   console.log('newsfeed rerenderzz', news);
   return (
     <View style={styles.viewContainer}>
-      {/* {news.length < 1 ? (
-        <View style={styles.loader}>
-          <ActivityIndicator size="large" color={colors.main} />
-        </View>
-      ) : (
-        <> */}
       <Button onPress={handleClick} title="click me" />
-      <SectionList
+      <FlatList
+        data={news}
+        keyExtractor={(item) => item.id.toString()}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        renderItem={renderNewsItem}
+      />
+      {/* <VerticalNewsList data={mockData} /> */}
+      {/* <SectionList
         // extraData={news}
         sections={[
           {
@@ -87,9 +102,7 @@ const NewsList = () => {
         keyExtractor={(item, index) => {
           return item + index;
         }}
-      />
-      {/* </>
-      )} */}
+      /> */}
     </View>
   );
 };

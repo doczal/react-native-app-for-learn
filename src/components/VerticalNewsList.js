@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import NewsItem from 'components/NewsItem';
 
 const VerticalNewsList = ({ data }) => {
+  console.log('vertical newslist rerender', data);
   return (
     <View style={styles.container}>
       <FlatList
